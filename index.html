@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYPHER-CORE AI | VIP Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">CYPHER-CORE AI</div>
+        <div class="nav-links">
+            <button class="google-btn" onclick="login()">Login with Google</button>
+        </div>
+    </nav>
+
+    <main>
+        <header class="hero">
+            <h1>Build Anything with AI</h1>
+            <p>High-Graphics Games & Pro Apps</p>
+            <div class="wallet">
+                <span>Coins: <span id="coin-count">50</span></span>
+                <button class="ad-btn" onclick="watchAd()">Get Free Coins (Watch Ad)</button>
+            </div>
+        </header>
+
+        <section class="editor-section">
+            <div class="editor-header">
+                <h3>AI Project Builder</h3>
+                <span class="status">7-Day Free Trial Active</span>
+            </div>
+            <textarea id="ai-prompt" placeholder="Describe your app or high-graphics game idea here..."></textarea>
+            <div class="actions">
+                <button class="build-btn" onclick="buildProject()">BUILD PROJECT (-10 Coins)</button>
+                <button class="fix-btn" onclick="fixBugs()">AUTO-FIX BUGS (-5 Coins)</button>
+            </div>
+            <div id="output-console" class="console">
+                Ready for input...
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+                  </html>
