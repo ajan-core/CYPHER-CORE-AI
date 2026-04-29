@@ -1,41 +1,69 @@
+// Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// Aapka Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyDIyzd91eqHJabHBDU_4paJas_MbSr_ZG0",
+  authDomain: "cypher-core-ai.firebaseapp.com",
+  projectId: "cypher-core-ai",
+  storageBucket: "cypher-core-ai.firebasestorage.app",
+  messagingSenderId: "858049071556",
+  appId: "1:858049071556:web:29479b099b0f475c5e7c91"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
 let coins = 50;
 
-function login() {
-    alert("Redirecting to Google Login...");
+// Google Login Function
+window.login = function() {
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            const user = result.user;
+            document.getElementById('output-console').innerText = "Welcome, " + user.displayName + "!";
+            console.log("Logged in:", user);
+        }).catch((error) => {
+            console.error("Login Failed:", error);
+            alert("Login nahi ho saka. Check karein ke Authentication enable hai ya nahi.");
+        });
 }
 
-function watchAd() {
-    let console = document.getElementById('output-console');
-    console.innerText = "Watching Ad... (30s remaining)";
+// Watch Ad Function
+window.watchAd = function() {
+    let consoleBox = document.getElementById('output-console');
+    consoleBox.innerText = "Watching Ad... (Please wait)";
     
     setTimeout(() => {
         coins += 20;
         document.getElementById('coin-count').innerText = coins;
-        console.innerText = "Success! 20 Coins added to your account.";
-    }, 5000); // 5 seconds for demo, real ad would be 30s
+        consoleBox.innerText = "Success! 20 Coins added to your account.";
+    }, 5000); 
 }
 
-function buildProject() {
+// Build Project Function
+window.buildProject = function() {
+    if (!auth.currentUser) {
+        alert("Pehle Google se Login karein!");
+        return;
+    }
     if (coins < 10) {
-        alert("Not enough coins! Watch an ad to earn more.");
+        alert("Coins kam hain! Ad dekhein.");
         return;
     }
     coins -= 10;
     document.getElementById('coin-count').innerText = coins;
-    let console = document.getElementById('output-console');
-    console.innerText = "AI is building your app... Please wait.";
-    
-    setTimeout(() => {
-        console.innerText = "Build Complete! File generated: project_v1.zip";
-    }, 3000);
+    document.getElementById('output-console').innerText = "CYPHER-CORE AI is building your project...";
 }
 
-function fixBugs() {
-    if (coins < 5) {
-        alert("Not enough coins!");
-        return;
+// Auth State Change (Check if user is already logged in)
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById('coin-count').innerText = coins;
+        console.log("User already logged in:", user.displayName);
     }
-    coins -= 5;
-    document.getElementById('coin-count').innerText = coins;
-    document.getElementById('output-console').innerText = "AI is scanning code for bugs... Errors fixed!";
-}
+});
+        
